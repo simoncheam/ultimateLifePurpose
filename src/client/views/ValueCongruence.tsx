@@ -22,7 +22,7 @@ const ValueCongruence = () => {
   const loc = useLocation();
   const nav = useNavigate();
   const now = 60;
-  const topRef = useRef(null);
+  const topRef = useRef<null | HTMLDivElement>(null);
 
   //use state
   //const [merged, setMerged] = useState([])
@@ -51,7 +51,7 @@ const ValueCongruence = () => {
   }, []);
 
   let userMergedArray: number[] = [];
-  userMetrics.forEach((um) => userMergedArray.push(um.valueid));
+  userMetrics.forEach((um) => userMergedArray.push(um.valueid!));
   let selectedValues = lifeValues.filter((lv) => userMergedArray.includes(lv.id));
 
   //----------// !handleSubmitButton , API PUT,
@@ -220,7 +220,7 @@ const ValueCongruence = () => {
       <div className=" container position-fixed bottom-0 end-0 my-3">
         <div className="row align-items-center ">
           <i
-            onClick={() => topRef.current.scrollIntoView()}
+            onClick={() => topRef.current!.scrollIntoView()}
             role="button"
             className=" bi bi-arrow-up-circle-fill text-info  bottom-0 end-0 col-auto me-auto "
             style={{ fontSize: 50 }}

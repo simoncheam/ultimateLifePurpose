@@ -11,7 +11,7 @@ const ValueDefinitions = () => {
   const nav = useNavigate();
   const maxLength = 500;
   const now = 40;
-  const topRef = useRef(null);
+  const topRef = useRef<null | HTMLDivElement>(null);
 
   //use state
   const [merged, setMerged] = useState([]);
@@ -45,7 +45,7 @@ const ValueDefinitions = () => {
   // *** (1) GET MERGED DATA
 
   let userValueArray: number[] = [];
-  userMetrics.forEach((um) => userValueArray.push(um.valueid));
+  userMetrics.forEach((um) => userValueArray.push(um.valueid!));
 
   let selectedValues = lifeValues.filter((lv) => userValueArray.includes(lv.id));
 
@@ -203,7 +203,7 @@ const ValueDefinitions = () => {
       <div className=" container position-fixed bottom-0 end-0 my-3">
         <div className="row align-items-center">
           <i
-            onClick={() => topRef.current.scrollIntoView()}
+            onClick={() => topRef.current!.scrollIntoView()}
             role="button"
             className=" bi bi-arrow-up-circle-fill text-info  col-auto me-auto "
             style={{ fontSize: 50 }}

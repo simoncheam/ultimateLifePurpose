@@ -13,7 +13,7 @@ const ValuePriority = () => {
   // *  useRefs
   const sum = useRef<any>({}); // ! reverse engineer the types
   //const divRefs = useRef({});
-  const topRef = useRef(null);
+  const topRef = useRef<null | HTMLDivElement>(null);
 
   const userValueArrayRef = useRef<any>([]);
   const selectedValuesRef = useRef<any[]>([]);
@@ -24,6 +24,22 @@ const ValuePriority = () => {
   const [userMetrics, setUserMetrics] = useState<userMetrics[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [formData, setFormData] = useState<{ [key: string]: { [key: string]: number } }>({}); //
+
+  interface groupInfo {
+    groupName: string;
+    comparisons: {
+      pairName: string;
+      basekey: string;
+      subkey: string;
+      disabled: boolean;
+      options: {
+        label: string;
+        value: string;
+        selected: boolean;
+      }[];
+    }[];
+  }
+
   const [priorities, setPriorities] = useState<
     {
       groupName: string;
@@ -163,7 +179,7 @@ const ValuePriority = () => {
   // ✅ OK // *** Creates compared object - eliminates duplicate subkeys(inner values)
   useEffect(() => {
     if (!isLoaded) return;
-    const compared: { [outerValue: string]: Array<{ innerValue: string }> } = {};
+    const compared: { [outerValue: string]: { innerValue: string } } = {};
 
     for (const outerValue of userValueNamesArrayRef.current) {
       for (const innerValue of userValueNamesArrayRef.current) {
@@ -173,7 +189,7 @@ const ValuePriority = () => {
             compared[innerValue][outerValue] === undefined
           ) {
             compared[outerValue] = {
-              [innerValue]: null,
+              [innerValue]: '',
               ...compared[outerValue],
             };
           }
@@ -183,10 +199,10 @@ const ValuePriority = () => {
 
     // ! NEW grouping structure => updates priorties state
 
-    const data = [];
+    const data: groupInfo[] = [];
     for (const [basekey, subkeys] of Object.entries(compared)) {
       // Each group is divided by basekey
-      const group = {
+      const group: groupInfo = {
         groupName: basekey,
 
         // each comparison tracks the disabled state of the pair and radio options
@@ -432,7 +448,7 @@ const ValuePriority = () => {
       <div className=" container position-fixed bottom-0 end-0">
         <div className=" row align-items-center m-2 ">
           <i
-            onClick={() => topRef.current.scrollIntoView()}
+            onClick={() => topRef.current!.scrollIntoView()}
             role="button"
             className=" bi bi-arrow-up-circle-fill text-info  col-auto me-auto "
             style={{ fontSize: 50 }}

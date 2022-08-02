@@ -9,7 +9,7 @@ import { Accordion } from 'react-bootstrap';
 const ValueHabits = () => {
   const nav = useNavigate();
   const now = 95;
-  const topRef = useRef(null);
+  const topRef = useRef<null | HTMLDivElement>(null);
 
   const [lifeValues, setLifeValues] = useState<LifeValues[]>([]);
   const [userMetrics, setUserMetrics] = useState<userMetrics[]>([]);
@@ -51,7 +51,7 @@ const ValueHabits = () => {
 
   let userMergedArray: number[] = [];
 
-  userMetrics.forEach((um) => userMergedArray.push(um.valueid));
+  userMetrics.forEach((um) => userMergedArray.push(um.valueid!));
   let selectedValues = lifeValues.filter((lv) => userMergedArray.includes(lv.id));
 
   //handle Submit
@@ -214,7 +214,7 @@ const ValueHabits = () => {
       <div className=" container position-fixed bottom-0 end-0 my-3">
         <div className=" row align-items-center ">
           <i
-            onClick={() => topRef.current.scrollIntoView()}
+            onClick={() => topRef.current!.scrollIntoView()}
             role="button"
             className=" bi bi-arrow-up-circle-fill text-info col-auto me-auto "
             style={{ fontSize: 50 }}

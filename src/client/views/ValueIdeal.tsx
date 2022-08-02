@@ -16,7 +16,7 @@ const ValueIdeal = () => {
   //const [userMergedArray, setUserMergedArray] = useState<[]>([])
   const maxLength = 500;
   const now = 80;
-  const topRef = useRef(null);
+  const topRef = useRef<null | HTMLDivElement>(null);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -51,7 +51,7 @@ const ValueIdeal = () => {
 
   let userMergedArray: number[] = [];
 
-  userMetrics.forEach((um) => userMergedArray.push(um.valueid));
+  userMetrics.forEach((um) => userMergedArray.push(um.valueid!));
   let selectedValues = lifeValues.filter((lv) => userMergedArray.includes(lv.id));
   // console.log(userMergedArray);
 
@@ -198,17 +198,13 @@ const ValueIdeal = () => {
             <button onClick={() => nav(-1)} className="row btn btn-primary m-2">
               Go Back{' '}
             </button>
-            {/* <button className="btn btn-outline-success" onClick={handleSubmitButton}>
-              {' '}
-              Submit
-            </button> */}
           </form>
         </div>
       </div>
       <div className="  container position-fixed bottom-0 end-0">
         <div className=" row align-items-center m-2">
           <i
-            onClick={() => topRef.current.scrollIntoView()}
+            onClick={() => topRef.current!.scrollIntoView()}
             role="button"
             className=" bi bi-arrow-up-circle-fill text-info col-auto me-auto "
             style={{ fontSize: 50 }}

@@ -12,7 +12,7 @@ const ValueSummary = () => {
   const [userMetricsJoined, setUserMetricsJoined] = useState<userMetricsJoined[]>([]);
   const [lifeValues, setLifeValues] = useState<LifeValues[]>([]);
   const now = 100;
-  const topRef = useRef(null);
+  const topRef = useRef<null | HTMLDivElement>(null);
   const divRefs = useRef<any>({});
 
   //! habit state setup
@@ -128,7 +128,7 @@ const ValueSummary = () => {
             <div className=" col-md-6">
               <div className=" row align-items-center">
                 <i
-                  onClick={() => topRef.current.scrollIntoView()}
+                  onClick={() => topRef.current!.scrollIntoView()}
                   role="button"
                   className="  bi bi-arrow-up-circle-fill text-info col-auto me-auto "
                   style={{ fontSize: 50 }}
@@ -137,19 +137,19 @@ const ValueSummary = () => {
             </div>
           </div>
 
-          <div className=" row justify-content-center " ref={topRef}>
-            <div className="col-md-6 card shadow p-3 m-3 ">
+          <div className=" d-flex justify-content-center " ref={topRef}>
+            <div className="col-12 col-md-12 card shadow  ">
               <h1>Life Purpose Summary</h1>
               <ul>
-                <li>My top life values in priority order</li>
+                <li>Below are your top life values in priority order</li>
                 <li>
                   Notes: Best viewed on desktop. Habits can be scheduled after logging into Google
                   Calendar.
                 </li>
               </ul>
-              <table className="table col-md-6">
+              <table className="table ">
                 <thead>
-                  <tr className="">
+                  <tr className="col-md-8">
                     <th scope="col-12 col-md-2">Priority</th>
                     <th scope="col-12 col-md-2">Value</th>
                     <th scope="col-12">Score</th>
@@ -159,12 +159,13 @@ const ValueSummary = () => {
                 <tbody>
                   {userMetricsJoined.map((sum, index) => (
                     <tr key={`summary-${sum.id}-${sum.userid}-${index}`}>
-                      <th className="col-md-1" scope="row">
+                      <th className="col-1" scope="row">
                         {Number(index) + 1}
                       </th>
-                      <td>{sum.value_name}</td>
-                      <td>{sum.priority}</td>
-                      <td>
+                      {/* regex to replace '/'  for formatting*/}
+                      <td className="col-1 col-md-8">{sum.value_name?.replace(/\//g, ' / ')}</td>
+                      <td className="col-1">{sum.priority}</td>
+                      <td className="col-2">
                         <div
                           className="d-flex justify-content-center"
                           onClick={() => scrollToMyRef(sum.valueid)}
@@ -184,12 +185,14 @@ const ValueSummary = () => {
               key={`userMetrics-${um.valueid}-${um.id}-${um.habit}`}
               className="row justify-content-center"
             >
-              <div className="" ref={(ref) => (divRefs.current[um.valueid] = ref)}>
+              <div className="" ref={(ref) => (divRefs.current[um.valueid!]! = ref)}>
                 {/* outer card */}
-                <div className="card m-3 shadow p-2">
+                <div className="card my-3  shadow p-2">
                   {/* card header */}
                   <div className="card-title text-center">
-                    <label className="h2 form-label m-2">{um.value_name}</label>
+                    <label className="h2 form-label m-2">
+                      {um.value_name!.replace(/\//g, ' / ')}
+                    </label>
                   </div>
 
                   {/* card body  */}
@@ -234,14 +237,14 @@ const ValueSummary = () => {
                             <DatePicker
                               className="m-2 form-select"
                               selected={start}
-                              onChange={(date) => setStart(date)}
+                              onChange={(date) => setStart(date!)}
                             />
 
                             <label className="mt-2 lead">End Date</label>
                             <DatePicker
                               className="m-2 form-select"
                               selected={start}
-                              onChange={(date) => setSelectedDate(date)}
+                              onChange={(date) => setSelectedDate(date!)}
                             />
 
                             <label className="mt-2 lead">Frequency</label>

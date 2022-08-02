@@ -19,7 +19,6 @@ import ValueCongruence from './views/ValueCongruence';
 import ValueDefinitions from './views/ValueDefinitions';
 import ValueHabits from './views/ValueHabits';
 import ValueIdeal from './views/ValueIdeal';
-import ValueMotivation from './views/ValueMotivation';
 import ValuePriority from './views/ValuePriority';
 import ValueSummary from './views/ValueSummary';
 import Verify from './views/Verify';
@@ -62,9 +61,6 @@ const App = (props: AppProps) => {
 
         {/* Define 1-3 Habits for top priority values */}
         <Route path="/habits" element={<ValueHabits />}></Route>
-
-        {/* Values Motivation */}
-        <Route path="/motivation" element={<ValueMotivation />}></Route>
 
         {/* Value Summary */}
         <Route path="/summary" element={<ValueSummary />}></Route>

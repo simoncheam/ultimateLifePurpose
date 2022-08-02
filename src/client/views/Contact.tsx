@@ -8,7 +8,7 @@ const Contact = () => {
 
   const [userName, setUserName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [message, setMessage] = useState<string>(null);
+  const [message, setMessage] = useState<string>(null!);
 
   const handleSubmitButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

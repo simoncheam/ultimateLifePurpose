@@ -8,7 +8,7 @@ const Register = () => {
 
   const [userName, setUserName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>(null);
+  const [password, setPassword] = useState<string>(null!);
 
   const handleSubmitButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

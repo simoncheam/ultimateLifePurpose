@@ -8,7 +8,7 @@ const Login = () => {
   const nav = useNavigate();
 
   const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>(null);
+  const [password, setPassword] = useState<string>(null!);
 
   const handleSubmitButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

@@ -179,7 +179,7 @@ const ValuePriority = () => {
   // ✅ OK // *** Creates compared object - eliminates duplicate subkeys(inner values)
   useEffect(() => {
     if (!isLoaded) return;
-    const compared: { [outerValue: string]: { innerValue: string } } = {};
+    const compared: { [outerValue: string]: Array<{ innerValue: any }> } = {};
 
     for (const outerValue of userValueNamesArrayRef.current) {
       for (const innerValue of userValueNamesArrayRef.current) {
@@ -188,6 +188,7 @@ const ValuePriority = () => {
             compared[innerValue] === undefined ||
             compared[innerValue][outerValue] === undefined
           ) {
+            //@ts-ignore
             compared[outerValue] = {
               [innerValue]: '',
               ...compared[outerValue],

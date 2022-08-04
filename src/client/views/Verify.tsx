@@ -13,20 +13,23 @@ const Verify = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    // token and email pull from url
     const token = searchParams.get('token');
     const email = searchParams.get('email');
 
     setSearchParams({ token: token!, email: email! });
 
-    // ? Q unable to use APIService, why? no token?
+    // email and token sent through auth/verify route
     fetch(`/auth/verify?email=${email}&token=${token}`)
       .then((res) => res.json())
       .then((res) => {
+        // token set if successful
         localStorage.setItem('token', res.token);
         //const tokenStatus = res.message === 'valid';
         console.log(token);
         setIsAuthed(res.token);
 
+        //redirect to start - stage 1
         nav(`/select`);
       })
       .catch((e) => {
@@ -34,7 +37,7 @@ const Verify = () => {
       });
   }, []);
 
-  // loading please wait
+  // loading please wait - use will see temporarily
   if (!isAuthed) {
     return <>loading please wait...</>;
   }
@@ -64,10 +67,6 @@ const Verify = () => {
                   Login{' '}
                 </Link>
               )}
-
-              <Link to={`/learn`} className="row btn btn-outline-warning m-2">
-                Learn More (TBD){' '}
-              </Link>
             </div>
           </div>
         </div>

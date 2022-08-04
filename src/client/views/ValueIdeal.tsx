@@ -53,14 +53,12 @@ const ValueIdeal = () => {
 
   userMetrics.forEach((um) => userMergedArray.push(um.valueid!));
   let selectedValues = lifeValues.filter((lv) => userMergedArray.includes(lv.id));
-  // console.log(userMergedArray);
 
   //handle Submit
   const handleSubmitButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     // ! add input validation - check for 10 items or empty string
-
     if (Object.keys(formData).length !== 10) {
       Swal.fire({
         title: 'Error!',
@@ -130,10 +128,6 @@ const ValueIdeal = () => {
   if (!userMetrics) {
     return <> Loading...</>;
   }
-
-  const progressStyle = {
-    width: '80%',
-  };
 
   return (
     <div className="container">

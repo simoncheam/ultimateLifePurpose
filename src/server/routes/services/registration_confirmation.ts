@@ -20,8 +20,6 @@ export const send_confirmation_email = async (email: string) => {
         { expiresIn: jwt_config.tempExpiration }
     );
 
-
-
     sgMail.setApiKey(config.sendgrid_config.apiKey)
 
     const msg: {
@@ -37,11 +35,10 @@ export const send_confirmation_email = async (email: string) => {
             email: 'simon@simoncheam.dev'
         }, // * verified sender
         subject: 'please verify your account',
-        text: 'and easy to do anywhere, even with Node.js', // ! this is not working!
+        text: 'and easy to do anywhere, even with Node.js',
         html: `<a href="${URL_BASE}/verify?email=${email}&token=${tempToken}"> Click to confirm your account </a>`
-        // ! The email received does not have the same link? why?
-        // html: `<a href="${URL_BASE}/verify?email=${email}&token=${tempToken}"> Click to confirm your account </a><br><br>
-        // `,
+
+
     }
 
     //<a href="${DEV_URL_BASE}/verify?email=${email}&token=${tempToken}"> Click to confirm your account(dev) </a>

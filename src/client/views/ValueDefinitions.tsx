@@ -25,6 +25,7 @@ const ValueDefinitions = () => {
   // fetch data if page reloads or user resumes session
 
   useEffect(() => {
+    // fetch user specific data - req.user
     APIService('/api/usermetrics')
       .then((data) => {
         setUserMetrics(data);
@@ -33,6 +34,7 @@ const ValueDefinitions = () => {
         console.log(e);
       });
 
+    // fetch all life values
     APIService(`/api/values`)
       .then((data) => {
         setLifeValues(data);
@@ -55,7 +57,6 @@ const ValueDefinitions = () => {
     e.preventDefault();
 
     // ! add input validation
-    //Q: how can we prevent more than 10 objects from being entered
     if (Object.keys(formData).length !== 10) {
       Swal.fire({
         title: 'Error!',
@@ -74,10 +75,6 @@ const ValueDefinitions = () => {
       });
       return;
     }
-
-    // ! add PUT confirmation
-
-    // ? need to review this with respect to process before PUT request
 
     //*** creates ARRAY of OBJECTS
     let temp = Object.keys(formData).map((key) => {
@@ -119,7 +116,7 @@ const ValueDefinitions = () => {
 
   const handleTextAreaUpdate = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newText = e.target.value;
-    const valueId = e.target.name; // why do we use name prop for the id // ! ?
+    const valueId = e.target.name;
 
     setFormData({ ...formData, [valueId]: newText });
   };
@@ -130,7 +127,6 @@ const ValueDefinitions = () => {
   const progressStyle = {
     width: '40%',
   };
-  // do I need this? aria-valuenow={25}
 
   // *** (2) DISPLAY MERGED DATA "selectedValues"
 
@@ -191,10 +187,6 @@ const ValueDefinitions = () => {
             <button onClick={() => nav(-1)} className="row btn btn-primary m-2">
               Go Back{' '}
             </button>
-            {/* <button className="btn btn-outline-success" onClick={handleSubmitButton}>
-            {' '}
-            Submit
-          </button> */}
           </form>
         </div>
       </div>

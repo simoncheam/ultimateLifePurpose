@@ -10,11 +10,9 @@ const ValuePriority = () => {
   const nav = useNavigate();
   const now = 90;
 
-  // *  useRefs
-  const sum = useRef<any>({}); // ! reverse engineer the types
-  //const divRefs = useRef({});
+  // *  useRefs - does not cause rerender when updated
+  const sum = useRef<any>({});
   const topRef = useRef<null | HTMLDivElement>(null);
-
   const userValueArrayRef = useRef<any>([]);
   const selectedValuesRef = useRef<any[]>([]);
   const userValueNamesArrayRef = useRef<any>({});
@@ -69,7 +67,6 @@ const ValuePriority = () => {
     },
   });
 
-  // ✅ OK // * ////////// Button Handlers
   const handleSubmitButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -78,6 +75,7 @@ const ValuePriority = () => {
     // reducer to add to previous vale
     let totalScore = tempSum.reduce((a, b) => a + b, 0);
 
+    //! check for unanswered score
     if (totalScore !== 45) {
       Swal.fire({
         title: 'Error!',
@@ -88,25 +86,17 @@ const ValuePriority = () => {
       return;
     }
 
-    //console.log({ formData });
-
-    // creates array of strings "value names"
+    //! creates array of strings "value names"
     let tempMatch = Object.keys(formData);
 
-    // create array - filter thru life vals - where lv includes value_name from tempMatch array
+    //! create array - filter thru life vals - where lv includes value_name from tempMatch array
     let matches = lifeValues.filter((lv) => tempMatch.includes(lv.value_name));
 
-    // ! TESTING
-    //console.log({ matches });
-
-    // map over matches
+    //! map over matches - creates array of objects with valueid and score
     let arrayMerged: { valueid: number; score: number }[] = matches.map((merged) => ({
       valueid: Number(merged.id),
-      score: Number(formData[merged.value_name][merged.value_name]),
-      // score: Number(formData[merged.value_name][merged.value_name]) removed
+      score: Number(formData[merged.value_name][merged.value_name]), // flatten to number
     }));
-
-    //console.log(arrayMerged);
 
     // ! Submit confirm
     Swal.fire({
@@ -162,7 +152,7 @@ const ValuePriority = () => {
       });
   }, []);
 
-  // prepares refs of filtered/mapped values after loading is done
+  //!  prepares refs of filtered/mapped values after loading is done
   useEffect(() => {
     if (!userMetrics.length || !lifeValues.length) return;
 
@@ -198,15 +188,19 @@ const ValuePriority = () => {
       }
     }
 
-    // ! NEW grouping structure => updates priorties state
+    // ! Updates priorities state
 
     const data: groupInfo[] = [];
+
+    //! basekey = outerValue
+    //! subkeys = array of innerValue objects
+
     for (const [basekey, subkeys] of Object.entries(compared)) {
-      // Each group is divided by basekey
+      //* Each group is divided by basekey
       const group: groupInfo = {
         groupName: basekey,
 
-        // each comparison tracks the disabled state of the pair and radio options
+        // ! each comparison tracks the disabled state of the pair and radio options
         comparisons: Object.keys(subkeys).map((subkey) => {
           return {
             pairName: `${basekey}-${subkey}`,
@@ -214,7 +208,7 @@ const ValuePriority = () => {
             subkey,
             disabled: false,
 
-            // each option has label, value and selected radio state
+            //! each option has label, value and selected radio state
             options: [
               {
                 label: `(1) LOTS of ${basekey.toUpperCase()}, but little ${subkey.toUpperCase()}.`,
@@ -235,8 +229,6 @@ const ValuePriority = () => {
     setPriorities(data);
   }, [isLoaded, lifeValues, userMetrics]);
 
-  // console.log(priorities);
-
   // ✅ OK // *** handleChange - toggle radio + scoring
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextState = priorities.map((group) => {
@@ -256,8 +248,6 @@ const ValuePriority = () => {
             options: pair.options.map((opt) => {
               const selected = opt.value === e.target.value;
 
-              // if we got this far to toggle a selected radio
-              // time to populate or update our sum object
               if (selected) {
                 if (Number(sum.current[opt.value])) {
                   sum.current[opt.value]++;
@@ -277,7 +267,7 @@ const ValuePriority = () => {
 
     const formDataKey = e.target.value;
 
-    // *********************
+    //! priorities state(score) updated when radio button is clicked
     setPriorities(nextState);
     console.log(
       '%cselected! sum object:',
@@ -285,12 +275,11 @@ const ValuePriority = () => {
     );
     console.log(sum.current);
     console.log('----------');
-    // *********************
 
-    // ! Need to set formData
+    // !  set formData
     setFormData((formData) => ({
       ...formData,
-      [formDataKey]: sum.current, // ? Number(formDataKey) // !
+      [formDataKey]: sum.current,
     }));
   };
 
@@ -310,7 +299,7 @@ const ValuePriority = () => {
             disabled: false,
             options: pair.options.map((opt) => {
               if (opt.selected) {
-                sum.current[opt.value]--; //? Q: what is wrong with TS?
+                sum.current[opt.value]--;
               }
 
               return {
@@ -330,20 +319,6 @@ const ValuePriority = () => {
     );
     console.log(sum.current);
     console.log('----------');
-  };
-
-  // * DEV - Scroll to Ref
-
-  // ! conditions: Check object.keys of comparisons
-
-  // const scrollToMyRef = (valueid: number) => {
-  //     divRefs.current[valueid === 10 ? 1 : valueid + 1].scrollIntoView({
-  //         behavior: "smooth"
-  //     })
-  // }
-
-  const progressStyle = {
-    width: '90%',
   };
 
   if (
@@ -439,11 +414,6 @@ const ValuePriority = () => {
           <button onClick={() => nav(-1)} className="m-2 btn btn-primary">
             Go Back{' '}
           </button>
-
-          {/* <button className="m-2 btn btn-outline-success" onClick={handleSubmitButton}>
-            {' '}
-            Submit
-          </button> */}
         </div>
       </section>
       <div className=" container position-fixed bottom-0 end-0">

@@ -46,8 +46,6 @@ router.post('/', async (req, res, next) => {
             { expiresIn: jwt_config.expiration }
         );
 
-
-
         send_confirmation_email(newUser.email!)
 
         res.status(201).json({

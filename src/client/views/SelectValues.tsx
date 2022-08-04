@@ -5,12 +5,6 @@ import { APIService } from '../services/APIService';
 import Swal from 'sweetalert2';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Accordion from 'react-bootstrap/Accordion';
-import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import NavigationIcon from '@mui/icons-material/Navigation';
 
 const SelectValues = () => {
   const [lifeValues, setLifeValues] = useState<LifeValues[]>([]);
@@ -18,7 +12,7 @@ const SelectValues = () => {
   const nav = useNavigate();
   const loc = useLocation();
   const now = 20;
-  const topRef = useRef(null);
+  const topRef = useRef<null | HTMLDivElement>(null);
 
   const Toast = Swal.mixin({
     toast: true,
@@ -32,14 +26,10 @@ const SelectValues = () => {
     },
   });
 
-  // fetch values
   useEffect(() => {
-    //API stuff
     APIService(`/api/values`)
       .then((data) => {
         setLifeValues(data);
-
-        // state stuff
       })
       .catch((e) => {
         console.log(e);
@@ -98,7 +88,7 @@ const SelectValues = () => {
       <div className=" container position-fixed bottom-0 end-0 my-3">
         <div className=" row align-items-center">
           <i
-            onClick={() => topRef.current.scrollIntoView()}
+            onClick={() => topRef.current!.scrollIntoView()}
             role="button"
             className="  bi bi-arrow-up-circle-fill text-info col-auto me-auto "
             style={{ fontSize: 50 }}
@@ -166,7 +156,6 @@ const SelectValues = () => {
                         icon: 'error',
                         confirmButtonText: 'Ok',
                       });
-
                       return;
                     }
 
@@ -198,19 +187,6 @@ const SelectValues = () => {
             </div>
           ))}
         </div>
-        {/* </div> */}
-
-        {/* {selectedIdArray.length === 10 ? (
-          <div className="row m-5 justify-content-center">
-            <button className="btn m-3 btn-outline-success " onClick={handleSubmitButton}>
-              Submit
-            </button>
-          </div>
-        ) : (
-          <h1 className="display-3 m-3 text-center">
-            Select {10 - selectedIdArray.length} Values{' '}
-          </h1>
-        )} */}
       </form>
     </div>
   );

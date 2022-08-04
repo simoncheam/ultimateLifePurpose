@@ -28,9 +28,6 @@ const Register = () => {
       password: password,
     })
       .then((data) => {
-        //  localStorage.setItem('token', data.token)
-        // console.log(data.token);
-
         Swal.fire(
           'Success!',
           `Welcome, ${userName}!

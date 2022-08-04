@@ -23,13 +23,8 @@ const ValueCongruence = () => {
   const nav = useNavigate();
   const now = 60;
   const topRef = useRef<null | HTMLDivElement>(null);
-
-  //use state
-  //const [merged, setMerged] = useState([])
-
   const [lifeValues, setLifeValues] = useState<LifeValues[]>([]);
   const [userMetrics, setUserMetrics] = useState<userMetrics[]>([]);
-
   const [formData, setFormData] = useState<{ [key: number]: number }>({});
 
   useEffect(() => {
@@ -68,7 +63,6 @@ const ValueCongruence = () => {
         icon: 'error',
         confirmButtonText: 'Ok',
       });
-
       // alert('please complete all 10 items!')
       return;
     }
@@ -88,12 +82,10 @@ const ValueCongruence = () => {
           icon: 'success',
           title: 'Congruence ratings added successfully',
         });
-
         nav(`/idealstate`);
       })
       .catch((e) => {
         console.log(e);
-
         Swal.fire({
           title: 'Error! Check the console',
           text: 'Do you want to continue',
@@ -107,24 +99,14 @@ const ValueCongruence = () => {
 
   const handleRangeAreaUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newRating = e.target.value;
-
     const valueId = e.target.name;
 
     setFormData({ ...formData, [valueId]: newRating });
   };
 
-  /*
-    ! setFormData
-
-    */
-
   if (!userMetrics) {
     return <> Loading...</>;
   }
-
-  const progressStyle = {
-    width: '60%',
-  };
 
   return (
     // container
@@ -134,14 +116,6 @@ const ValueCongruence = () => {
         <div className="col-md-6 ">
           <ProgressBar animated now={now} label={`${now}%`} />
 
-          {/* <div className="progress my-3">
-                    <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin={0} aria-valuemax={100}
-                        style={progressStyle}>
-                        {progressStyle.width}
-                    </div>
-                </div> */}
-
-          {/* card  */}
           <div className="row card shadow my-3 py-3" ref={topRef}>
             <h1>Congruence </h1>
 
@@ -210,10 +184,6 @@ const ValueCongruence = () => {
             <button onClick={() => nav(-1)} className="row btn btn-primary m-2">
               Go Back{' '}
             </button>
-            {/* <button className="btn btn-outline-success" onClick={handleSubmitButton}>
-            {' '}
-            Submit
-          </button> */}
           </form>
         </div>
       </div>

@@ -226,6 +226,7 @@ const ValuePriority = () => {
       };
       data.push(group);
     }
+    //console.log({ data });
     setPriorities(data);
   }, [isLoaded, lifeValues, userMetrics]);
 
@@ -281,6 +282,9 @@ const ValuePriority = () => {
       ...formData,
       [formDataKey]: sum.current,
     }));
+
+    console.log({ formData });
+    // console.log({ priorities });
   };
 
   //  ! *** handleEdit

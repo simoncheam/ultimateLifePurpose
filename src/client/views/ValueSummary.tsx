@@ -5,8 +5,6 @@ import { APIService } from '../services/APIService';
 import Swal from 'sweetalert2';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ValueSummary = () => {
   const [userMetricsJoined, setUserMetricsJoined] = useState<userMetricsJoined[]>([]);
@@ -234,6 +232,7 @@ const ValueSummary = () => {
                             />
 
                             <label className="mt-2 lead">Start Date</label>
+                            {/* @ts-ignore */}
                             <DatePicker
                               className="m-2 form-select"
                               selected={start}
@@ -241,6 +240,7 @@ const ValueSummary = () => {
                             />
 
                             <label className="mt-2 lead">End Date</label>
+                            {/* @ts-ignore */}
                             <DatePicker
                               className="m-2 form-select"
                               selected={start}

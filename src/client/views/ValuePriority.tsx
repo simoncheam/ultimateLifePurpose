@@ -5,10 +5,10 @@ import { APIService } from '../services/APIService';
 import Swal from 'sweetalert2';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { Accordion } from 'react-bootstrap';
+const now = 90;
 
 const ValuePriority = () => {
   const nav = useNavigate();
-  const now = 90;
 
   // *  useRefs - does not cause rerender when updated
   const sum = useRef<any>({});

@@ -31,7 +31,7 @@ const Learn = () => {
             <div className="card-body row justify-content-center m-2">
               {/* FAQ Section */}
               <h3 className="row justify-content-center m-2"> Frequently Asked Questions</h3>
-              <p className="row justify-content-center m-2"> Click on a sections to learn more</p>
+              <p className="row justify-content-center m-2"> Click on a section to learn more</p>
 
               <Accordion flush>
                 <Accordion.Item eventKey="0">
@@ -61,7 +61,7 @@ const Learn = () => {
                 </Accordion.Item>
 
                 <Accordion.Item eventKey="2">
-                  <Accordion.Header>How does it work?</Accordion.Header>
+                  <Accordion.Header>How does it work?(IMPORTANT)</Accordion.Header>
                   <Accordion.Body>
                     <ul>
                       Here's an outline of how the process works:
@@ -72,6 +72,10 @@ const Learn = () => {
                       <li>Prioritize your values with a comparison ranking system</li>
                       <li>Create a powerful SMART habit that move you closer to your dreams</li>
                       <li>Take action and build momentum</li>
+                      <li>
+                        NOTE: Please allow at least 30 minutes to 1 hour for this process. Creating
+                        an authentic life purpose will take time and effort
+                      </li>
                     </ul>
                   </Accordion.Body>
                 </Accordion.Item>
@@ -95,7 +99,7 @@ const Learn = () => {
                         A specific and tangible vision for your life purpose aligned with your life
                         values
                       </li>
-                      <li>Congruence assessment based on current alignment with life value</li>
+                      <li>Congruence assessment based on current alignment with life values</li>
                     </ul>
                   </Accordion.Body>
                 </Accordion.Item>

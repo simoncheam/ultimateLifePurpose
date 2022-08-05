@@ -103,6 +103,28 @@ const Learn = () => {
                     </ul>
                   </Accordion.Body>
                 </Accordion.Item>
+                <Accordion.Item eventKey="5">
+                  <Accordion.Header>What's the tech stack?</Accordion.Header>
+                  <Accordion.Body>
+                    Here are some of the technologies and features used in this app...
+                    <ul>
+                      <li>
+                        Built with MySQL, Express, React, Node.js, Typescript, SendGrid, CSS,
+                        Bootstrap, Passport.js, Heroku
+                      </li>
+                      <li>
+                        MySQL database with many-to-many table structure, custom REST API with
+                        Express
+                      </li>
+                      <li>Email verification, authentication, and password reset functionality</li>
+                      <li>
+                        Conditional floating action buttons, nested priority logic, and data
+                        validation
+                      </li>
+                      <li>Includes Google calendar scheduling function for habit integration</li>
+                    </ul>
+                  </Accordion.Body>
+                </Accordion.Item>
               </Accordion>
 
               {isAuthed && (
